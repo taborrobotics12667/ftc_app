@@ -1,0 +1,71 @@
+package org.firstinspires.ftc.robotcontroller.external.samples;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+@TeleOp(name="Mecanum_test", group="Linear Opmode")
+//@Disabled
+public class Mecanum_test extends LinearOpMode {
+
+    // Declare OpMode members.
+
+    private DcMotor LF, LB, RF, RB;
+    private double speed, direction
+
+    @Override
+
+    public void runOpMode() {
+        telemetry.addData("Status", "Initialized");
+        teleZZmetry.update();
+
+        // Initialize the hardware variables. Note that the strings used here as parameters
+        // to 'get' must correspond to the names assigned during the robot configuration
+        // step (using the FTC Robot Controller app on the phone).
+        LF  = hardwareMap.get(DcMotor.class, "Motor 1");
+        LR = hardwareMap.get(DcMotor.class, "Motor 2");
+        RF = hardwareMap.get(DcMotor.class, "Motor 3");
+        RR = hardwareMap.get(DcMotor.class, "Motor 4");
+
+        // Most robots need the motor on one side to be reversed to drive forward
+        // Reverse the motor that runs backwards when connected directly to the battery
+        //leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        //rightDrive.setDirection(DcMotor.Direction.REVERSE);
+
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+        runtime.reset();
+
+
+        // run until the end of the match (driver presses STOP)
+        while (opModeIsActive()) {
+            double rightstickY = -gamepad1.right_stick_y;
+            double leftstickY = -gamepad1.left_stick_y;
+            boolean rightBumper = gamepad1.right_bumper;
+            boolean leftBumper = gamepad1.left_bumper;
+
+            if (rightBumper) {
+                LF.setPower(1);
+                LB.setPower(-1);
+                RF.setPower(-1);
+                RB.setPower(1);
+            }
+            else if (leftBumper) {
+                LF.setPower(-1);
+                LB.setPower(1);
+                RF.setPower(1);
+                RB.setPower(-1);
+            }
+            else {
+                LF.setPower(leftstickY);
+                LB.setPower(leftstickY);
+                RF.setPower(rightstickY);
+                RB.setPower(rightstickY);
+            }
+
+        }
+    }
+}
