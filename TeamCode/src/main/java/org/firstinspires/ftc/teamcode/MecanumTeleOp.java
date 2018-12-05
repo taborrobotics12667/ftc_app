@@ -24,7 +24,7 @@ public class MecanumTeleOp extends LinearOpMode {
     @Override
     public void runOpMode(){
 
-        robot = new MecanumDriveTrain(hardwareMap,"Motor1","Motor2","Motor3","Motor4");;
+        robot = new MecanumDriveTrain(hardwareMap,"Motor 1","Motor 2","Motor 3","Motor 4");;
         waitForStart();
 
         while(opModeIsActive()){
@@ -33,8 +33,18 @@ public class MecanumTeleOp extends LinearOpMode {
 
             double slide = Range.clip(gamepad1.right_stick_x,-maxPower,maxPower);
 
+            double dTL = Range.clip(gamepad1.right_stick_y, -maxPower,maxPower);
+
+
+
             if (slide != 0){
                 robot.slide(slide);
+            }
+            else if (dTL > 0){
+                robot.diagonalTL(dTL);
+            }
+            else if (dTL < 0){
+                robot.diagonalTR(Math.abs(dTL));
             }
             else{
                 robot.setPower(powerR,powerL);

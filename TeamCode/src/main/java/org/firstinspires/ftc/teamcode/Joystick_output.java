@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+@TeleOp
 public class Joystick_output extends LinearOpMode {
 
     @Override
@@ -10,8 +12,8 @@ public class Joystick_output extends LinearOpMode {
         while (opModeIsActive()){
             double x = gamepad1.left_stick_x;
             double y = gamepad1.left_stick_y;
-            String messge = "X output " + Double.toString(x) + "Y output " + Double.toString(y);
-            telemetry.addData("Info:",messge);
+            String message = "X output " + Double.toString(x) + "Y output " + Double.toString(y);
+            telemetry.addData("Info:",message);
             telemetry.update();
 
 

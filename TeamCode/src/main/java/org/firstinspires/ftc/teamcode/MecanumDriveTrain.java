@@ -14,6 +14,8 @@ public class MecanumDriveTrain  {
     int[] left = {0,2};
     int[] front = {0,1};
     int[] back = {2,3};
+    int[] diagTL = {0,4};
+    int[] diagTR = {1,2};
 
     public  MecanumDriveTrain(HardwareMap hardwareMap,String ... motorNames){
         for (int i = 0;i<motorNames.length;i++){
@@ -51,11 +53,26 @@ public class MecanumDriveTrain  {
     }
 
     public void slide(double power){
-        for(int index:front){
+        for(int index:diagTR){
             motors.get(index).setPower(-power);
         }
-        for(int index:back){
+        for(int index:diagTL){
             motors.get(index).setPower(power);
         }
+    }
+
+    public void diagonalTL(double power){
+        for(int index:diagTL){
+            motors.get(index).setPower(power);
+        }
+
+    }
+
+    public void diagonalTR(double power){
+        for(int index:diagTR){
+            motors.get(index).setPower(power);
+
+        }
+
     }
 }
