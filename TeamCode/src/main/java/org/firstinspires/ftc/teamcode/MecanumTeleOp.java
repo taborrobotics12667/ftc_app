@@ -22,41 +22,57 @@ public class MecanumTeleOp extends LinearOpMode {
 
 
     @Override
-    public void runOpMode(){
+    public void runOpMode() {
 
-        robot = new MecanumDriveTrain(hardwareMap,"Motor 1","Motor 2","Motor 3","Motor 4");;
+        robot = new MecanumDriveTrain(hardwareMap, "Motor 1", "Motor 2", "Motor 3", "Motor 4");
+        ;
         waitForStart();
 
-        while(opModeIsActive()){
-            double powerR = Range.clip(gamepad1.left_stick_y-gamepad1.left_stick_x,-maxPower,maxPower);
-            double powerL = Range.clip(gamepad1.left_stick_y+ gamepad1.left_stick_x,-maxPower,maxPower);
+        while (opModeIsActive()) {
+            double powerR = Range.clip(gamepad1.left_stick_y - gamepad1.left_stick_x, -maxPower, maxPower);
+            double powerL = Range.clip(gamepad1.left_stick_y + gamepad1.left_stick_x, -maxPower, maxPower);
 
-            double slide = Range.clip(gamepad1.right_stick_x,-maxPower,maxPower);
-
-            double dTL = Range.clip(gamepad1.right_stick_y, -maxPower,maxPower);
-
+            boolean slideR = gamepad1.right_bumper;
+            boolean slideL = gamepad1.left_bumper;
 
 
-            if (slide != 0){
-                robot.slide(slide);
+            double diagonalY = Range.clip(gamepad1.right_stick_y, -maxPower, maxPower);
+            double diagonalX = Range.clip(gamepad1.right_stick_x, -maxPower, maxPower);
+
+
+            if (slideR) {
+                double Rslide = 0.5;
+                robot.slide(Rslide);
+            } else if (slideL) {
+                double Lslide = 0.5;
+                robot.slide(Lslide);
+            } else if (diagonalY != 0) {
+                if (diagonalY > 0) {
+                    if (diagonalX > 0) {
+                        robot.diagonalTL(maxPower1, -1);
+                    } else if (diagonalX > 0) {
+                        robot.diagonalTR(maxPower1, -1);
+                    }
+                } else if (diagonalY < 0) {
+                    if (diagonalX > 0) {
+                        robot.diagonalTR(maxPower1, 1);
+                    } else if (diagonalX < 0) {
+                        robot.diagonalTL(maxPower1, 1);
+                    }
+                }
+
+
             }
-            else if (dTL > 0){
-                robot.diagonalTL(dTL);
-            }
-            else if (dTL < 0){
-                robot.diagonalTR(Math.abs(dTL));
-            }
-            else{
-                robot.setPower(powerR,powerL);
-            }
+            else {
+                robot.setPower(powerR, powerL);
 
-            String messge = "Right Power: " + Double.toString(powerR) + "Left Power: " + Double.toString(powerL) + "Slide: " + Double.toString(slide);
-            telemetry.addData("Info:",messge);
-            telemetry.update();
+                String messge = "Right Power: " + Double.toString(powerR) + "Left Power: " + Double.toString(powerL);
+                telemetry.addData("Info:", messge);
+                telemetry.update();
 
-            conditional = gamepad1.right_bumper?1:0;
-            maxPower = maxPower1 + conditional*0.2;
+                conditional = gamepad1.left_stick_button ? 1 : 0;
+                maxPower = maxPower1 + conditional * 0.2;
 
+            }
         }
     }
-}
