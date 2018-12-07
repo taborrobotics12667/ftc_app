@@ -65,13 +65,18 @@ public class MecanumDriveTrain  {
         for(int index:diagTL){
             motors.get(index).setPower(power * dir);
         }
+        for(int index: diagTR){
+            motors.get(index).setPower(power/3 * -dir);
+        }
 
     }
 
     public void diagonalTR(double power, int dir){
         for(int index:diagTR){
             motors.get(index).setPower(power * dir);
-
+        }
+        for(int index:diagTL) {
+            motors.get(index).setPower(power / 3 * -dir);
         }
 
     }
