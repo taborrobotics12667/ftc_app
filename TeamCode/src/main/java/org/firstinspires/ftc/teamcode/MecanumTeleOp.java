@@ -12,11 +12,10 @@ import java.util.ArrayList;
 public class MecanumTeleOp extends LinearOpMode {
 
     private double maxPower1 = 0.5;
-    private double maxPower2 = 0.7;
 
     private int conditional = 1;
 
-    private double maxPower = maxPower1 + 0.2*conditional;
+    private double maxPower = maxPower1 + 0.2 * conditional;
 
     private MecanumDriveTrain robot;
 
@@ -25,12 +24,12 @@ public class MecanumTeleOp extends LinearOpMode {
     public void runOpMode() {
 
         robot = new MecanumDriveTrain(hardwareMap, "Motor 1", "Motor 2", "Motor 3", "Motor 4");
-        ;
+
         waitForStart();
 
         while (opModeIsActive()) {
-            double powerR = Range.clip(gamepad1.left_stick_y - gamepad1.left_stick_x, -maxPower, maxPower);
-            double powerL = Range.clip(gamepad1.left_stick_y + gamepad1.left_stick_x, -maxPower, maxPower);
+            double Rpower = Range.clip(gamepad1.left_stick_y + gamepad1.left_stick_x, -maxPower, maxPower);
+            double Lpower = Range.clip(gamepad1.left_stick_y - gamepad1.left_stick_x, -maxPower, maxPower);
 
             boolean slideR = gamepad1.right_bumper;
             boolean slideL = gamepad1.left_bumper;
@@ -41,22 +40,29 @@ public class MecanumTeleOp extends LinearOpMode {
 
 
             if (slideR) {
-                double Rslide = 0.5;
+                double Rslide = -0.3;
                 robot.slide(Rslide);
-            } else if (slideL) {
-                double Lslide = 0.5;
+
+            }
+            else if (slideL) {
+                double Lslide = 0.3;
                 robot.slide(Lslide);
-            } else if (diagonalY != 0) {
+
+            }
+            else if (diagonalY != 0) {
                 if (diagonalY > 0) {
                     if (diagonalX > 0) {
                         robot.diagonalTL(maxPower1, -1);
-                    } else if (diagonalX > 0) {
+                    }
+                    else if (diagonalX > 0) {
                         robot.diagonalTR(maxPower1, -1);
                     }
-                } else if (diagonalY < 0) {
+                }
+                else if (diagonalY < 0) {
                     if (diagonalX > 0) {
                         robot.diagonalTR(maxPower1, 1);
-                    } else if (diagonalX < 0) {
+                    }
+                    else if (diagonalX < 0) {
                         robot.diagonalTL(maxPower1, 1);
                     }
                 }
@@ -64,9 +70,9 @@ public class MecanumTeleOp extends LinearOpMode {
 
             }
             else {
-                robot.setPower(powerR, powerL);
+                robot.setPower(-Rpower, -Lpower);
 
-                String messge = "Right Power: " + Double.toString(powerR) + "Left Power: " + Double.toString(powerL);
+                String messge = "Right Power: " + Double.toString(Rpower) + "Left Power: " + Double.toString(Lpower);
                 telemetry.addData("Info:", messge);
                 telemetry.update();
 
@@ -76,3 +82,4 @@ public class MecanumTeleOp extends LinearOpMode {
             }
         }
     }
+}
