@@ -41,7 +41,7 @@ public class AutoDriveByEncoder extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-        initVuforia();
+        //initVuforia();
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -159,9 +159,9 @@ public class AutoDriveByEncoder extends LinearOpMode {
     }
     public void Sampling (double timeouts){
         //robot.armservo.setPosition(1.0)
-        if (gold_pos == "Center") {
+        //if (gold_pos == "Center") {
             encoderDrive(DRIVE_SPEED, 20,20,2.0);
         }
         // add elseif statements
-    }
+
 }

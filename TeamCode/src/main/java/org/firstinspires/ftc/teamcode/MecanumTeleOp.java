@@ -23,7 +23,7 @@ public class MecanumTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new MecanumDriveTrain(hardwareMap, "Motor 1", "Motor 2", "Motor 3", "Motor 4");
+        robot = new MecanumDriveTrain(hardwareMap, "Motor 1", "Motor 2", "Motor 3", "Motor 4", "Lift");
 
         waitForStart();
 
@@ -38,33 +38,41 @@ public class MecanumTeleOp extends LinearOpMode {
             double diagonalY = Range.clip(gamepad1.right_stick_y, -maxPower, maxPower);
             double diagonalX = Range.clip(gamepad1.right_stick_x, -maxPower, maxPower);
 
+            double liftPower = Range.clip(gamepad1.left_trigger - gamepad1.right_trigger, -0.5, 0.25);
+
+
 
             if (slideR) {
-                double Rslide = -0.3;
+                double Rslide = -0.7;
                 robot.slide(Rslide);
 
             }
             else if (slideL) {
-                double Lslide = 0.3;
+                double Lslide = 0.7;
                 robot.slide(Lslide);
 
             }
-            else if (diagonalY != 0) {
+            else if (diagonalX != 0 && diagonalY != 0) {
                 if (diagonalY > 0) {
                     if (diagonalX > 0) {
                         robot.diagonalTL(maxPower1, -1);
                     }
-                    else if (diagonalX > 0) {
+                    else if (diagonalX < 0){
                         robot.diagonalTR(maxPower1, -1);
                     }
                 }
                 else if (diagonalY < 0) {
-                    if (diagonalX > 0) {
+
+                    if (diagonalX > 0){
                         robot.diagonalTR(maxPower1, 1);
                     }
                     else if (diagonalX < 0) {
                         robot.diagonalTL(maxPower1, 1);
+                        String yes = "YES";
+                        telemetry.addData("IF?", yes);
+                        telemetry.update();
                     }
+
                 }
 
 
@@ -73,13 +81,24 @@ public class MecanumTeleOp extends LinearOpMode {
                 robot.setPower(-Rpower, -Lpower);
 
                 String messge = "Right Power: " + Double.toString(Rpower) + "Left Power: " + Double.toString(Lpower);
+
                 telemetry.addData("Info:", messge);
+
                 telemetry.update();
 
                 conditional = gamepad1.left_stick_button ? 1 : 0;
                 maxPower = maxPower1 + conditional * 0.2;
 
             }
+
+
+
+            robot.Lift(liftPower);
+
+
+            String diags = "X: " + Double.toString(diagonalX) + " Y: " + Double.toString(diagonalY);
+            telemetry.addData("Diagonals: ", diags);
+            telemetry.update();
         }
     }
 }
