@@ -649,7 +649,6 @@ public class FtcRobotControllerActivity extends Activity
       file = RobotConfigFile.noConfig(cfgFileMgr);
       hardwareFactory.setXmlPullParser(file.getXml());
       cfgFileMgr.setActiveConfigAndUpdateUI(false, file);
-      FtcDashboard.attachEventLoop(eventLoop);
     }
 
     OpModeRegister userOpModeRegister = createOpModeRegister();
@@ -660,6 +659,7 @@ public class FtcRobotControllerActivity extends Activity
     controllerService.setupRobot(eventLoop, idleLoop, runOnComplete);
 
     passReceivedUsbAttachmentsToEventLoop();
+    FtcDashboard.attachEventLoop(eventLoop);
   }
 
   protected OpModeRegister createOpModeRegister() {
