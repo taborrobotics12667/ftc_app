@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -41,9 +42,10 @@ public class HardwareTest
     public DcMotor  rightFrontDrive  = null;
     public DcMotor  leftBackDrive   = null;
     public DcMotor  rightBackDrive  = null;
+    public DcMotor  linearSlide = null;
     //public DcMotor  leftArm     = null;
-    //public Servo    leftClaw    = null;
-    //public Servo    rightClaw   = null;
+    public CRServo    grabServo    = null;
+    public DcMotor    armMotor   = null;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -68,7 +70,11 @@ public class HardwareTest
         leftBackDrive  = hwMap.get(DcMotor.class, "Motor 3");
         rightFrontDrive = hwMap.get(DcMotor.class, "Motor 2");
         rightBackDrive = hwMap.get(DcMotor.class, "Motor 4");
-        //leftArm    = hwMap.get(DcMotor.class, "left_arm");
+        linearSlide    = hwMap.get(DcMotor.class, "Extend");
+
+        grabServo = hwMap.get(CRServo.class, "Grab");
+        armMotor = hwMap.get(DcMotor.class, "Arm");
+
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
