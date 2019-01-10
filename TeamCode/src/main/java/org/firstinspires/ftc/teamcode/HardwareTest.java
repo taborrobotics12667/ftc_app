@@ -42,10 +42,10 @@ public class HardwareTest
     public DcMotor  leftBackDrive   = null;
     public DcMotor  rightBackDrive  = null;
     //public DcMotor  leftArm     = null;
-    //public Servo    leftClaw    = null;
-    //public Servo    rightClaw   = null;
+    //public Servo arm    = null;
 
-    public static final double MID_SERVO       =  0.5 ;
+
+    public static final double ARM_HOME       =  0.0 ;
     public static final double ARM_UP_POWER    =  0.45 ;
     public static final double ARM_DOWN_POWER  = -0.45 ;
 
@@ -89,10 +89,9 @@ public class HardwareTest
         //leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
-        //leftClaw  = hwMap.get(Servo.class, "left_hand");
-        //rightClaw = hwMap.get(Servo.class, "right_hand");
-        //leftClaw.setPosition(MID_SERVO);
-        //rightClaw.setPosition(MID_SERVO);
+        //arm  = hwMap.get(Servo.class, "arm");
+        //arm.setPosition(ARM_HOME);
+
     }
  }
 
