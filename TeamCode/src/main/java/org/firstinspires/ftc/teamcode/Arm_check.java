@@ -19,39 +19,49 @@ public class Arm_check extends LinearOpMode {
 
         // Declare OpMode members.
         private DcMotor Slide = null;
-        private CRServo rotate = null;
 
 
         @Override
         public void runOpMode() {
             Slide  = hardwareMap.get(DcMotor.class, "Slide");
+            Slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-            rotate = hardwareMap.get(CRServo.class, "spin");
 
 
             waitForStart();
+            double button = 0;
             boolean T = true;
             double ServoPower = 0;
             while (opModeIsActive()) {
 
-                rotate.setPower(ServoPower);
-                double extendPower = Range.clip(gamepad1.left_stick_y, -0.75, 0.75);
+                //rotate.setPower(ServoPower);
+                double extendPower = Range.clip(gamepad1.left_stick_y, -.75, .75);
                 //double armPower = Range.clip(gamepad2.right_stick_x, -0.75, 0.75);
-                boolean GoServo = gamepad1.a;
 
-                Slide.setPower(extendPower);
-                //ht.armMotor.setPower(armPower);
 
-                if (GoServo) {
-                    if (T) {
-                        ServoPower = 1;
-                        T = false;
-                    }
-                    else {
-                        T = true;
-                        ServoPower = 0;
-                    }
+                if (gamepad1.a){
+                    button= 0.25;
                 }
+                else if (gamepad1.b){
+                    button= -0.25;
+                }
+                else if (gamepad1.y) {
+                    button=  0.50;
+                }
+                else if (gamepad1.x){
+                    button= -0.50;
+                }
+                else{
+                    button = 0;
+                }
+
+
+
+                Slide.setPower(button);
+                Slide.setPower(extendPower);
+
+
+
                 String telem = Double.toString(extendPower);
                 telemetry.addData("Motor power: ", telem);
                 telemetry.update();

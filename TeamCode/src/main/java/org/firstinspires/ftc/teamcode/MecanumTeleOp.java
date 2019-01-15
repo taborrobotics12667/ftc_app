@@ -23,43 +23,44 @@ public class MecanumTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new MecanumDriveTrain(hardwareMap, "Motor 1", "Motor 2", "Motor 3", "Motor 4", "Lift");
+        robot = new MecanumDriveTrain(hardwareMap, "Motor 1", "Motor 2", "Motor 3", "Motor 4");
+        //,"Lift"
 
         waitForStart();
 
         while (opModeIsActive()) {
             double Rpower = Range.clip(gamepad1.left_stick_y + gamepad1.left_stick_x, -maxPower, maxPower);
             double Lpower = Range.clip(gamepad1.left_stick_y - gamepad1.left_stick_x, -maxPower, maxPower);
-
-            double botPower = Range.clip(gamepad1.right_stick_y, -maxPower, maxPower);
-            double slide = Range.clip(gamepad1.right_stick_x, -maxPower, maxPower);
-
-
             double diagonalY = Range.clip(gamepad1.right_stick_y, -maxPower, maxPower);
             double diagonalX = Range.clip(gamepad1.right_stick_x, -maxPower, maxPower);
 
             double liftPower = Range.clip(gamepad2.left_trigger - gamepad2.right_trigger, -0.5, 0.25);
 
 
-            robot.slide(slide);
+            if (gamepad1.right_bumper){
+                robot.slide(0.5);
+            }
+            else if (gamepad1.left_bumper){
+                robot.slide(0.5);
+            }
 
 
 
             if (diagonalX != 0 && diagonalY != 0) {
                 if (diagonalY > 0) {
-                    if (diagonalX > 0) {
+                    if (diagonalX < 0) {
                         robot.diagonalTL(maxPower1, -1);
                     }
-                    else if (diagonalX < 0){
+                    else if (diagonalX > 0){
                         robot.diagonalTR(maxPower1, -1);
                     }
                 }
                 else if (diagonalY < 0) {
 
-                    if (diagonalX > 0){
+                    if (diagonalX < 0){
                         robot.diagonalTR(maxPower1, 1);
                     }
-                    else if (diagonalX < 0) {
+                    else if (diagonalX > 0) {
                         robot.diagonalTL(maxPower1, 1);
                         String yes = "YES";
                         telemetry.addData("IF?", yes);
@@ -71,7 +72,7 @@ public class MecanumTeleOp extends LinearOpMode {
 
             }
             else {
-                robot.setPower(botPower);
+
                 robot.setPower(-Rpower, -Lpower);
 
                 String messge = "Right Power: " + Double.toString(Rpower) + "Left Power: " + Double.toString(Lpower);
@@ -87,7 +88,7 @@ public class MecanumTeleOp extends LinearOpMode {
 
 
 
-            robot.Lift(liftPower);
+            //robot.Lift(liftPower);
 
 
             String diags = "X: " + Double.toString(diagonalX) + " Y: " + Double.toString(diagonalY);
