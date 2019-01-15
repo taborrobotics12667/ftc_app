@@ -83,22 +83,22 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
         switch (goldPosition){ // using for things in the autonomous program
             case LEFT:
                 telemetry.addLine("going to the left");
-                encoderDrive(TURN_SPEED, -5, 5, 4.0);
+                encoderDrive(TURN_SPEED, -10, 10, 5.0);
                 break;
             case CENTER:
                 telemetry.addLine("going straight");
-                encoderDrive(TURN_SPEED, 5, 5, 4.0);
+                encoderDrive(TURN_SPEED, 10, 10, 5.0);
                 break;
             case RIGHT:
                 telemetry.addLine("going to the right");
-                encoderDrive(TURN_SPEED, 5, -5, 4.0);
+                encoderDrive(TURN_SPEED, 10, -10, 5.0);
                 break;
             case UNKNOWN:
                 telemetry.addLine("staying put");
                 break;
         }
 
-        encoderDrive(DRIVE_SPEED, 5, 5, 4.0);
+        encoderDrive(DRIVE_SPEED, 10, 5, 5.0);
         //drive to claiming
 
         //robot.arm.setPosition(1.0);            // S4: Stop and close the claw.
@@ -139,7 +139,7 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
             robot.leftFrontDrive.setTargetPosition(newLeftTarget);
             robot.leftBackDrive.setTargetPosition(newLeftTarget);
             robot.rightFrontDrive.setTargetPosition(newRightTarget);
-            robot.rightBackDrive.setTargetPosition(newLeftTarget);
+            robot.rightBackDrive.setTargetPosition(newRightTarget);
 
             // Turn On RUN_TO_POSITION
             robot.leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
