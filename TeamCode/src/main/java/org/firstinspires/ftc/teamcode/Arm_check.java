@@ -19,11 +19,15 @@ public class Arm_check extends LinearOpMode {
 
         // Declare OpMode members.
         private DcMotor Slide = null;
+        double top;
+        double bottom;
 
 
         @Override
         public void runOpMode() {
             Slide  = hardwareMap.get(DcMotor.class, "Slide");
+            Slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             Slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
@@ -54,16 +58,24 @@ public class Arm_check extends LinearOpMode {
                 else{
                     button = 0;
                 }
-
+                if (gamepad1.right_bumper){
+                    bottom = Slide.getCurrentPosition();
+                }
+                if (gamepad1.left_bumper){
+                    top = Slide.getCurrentPosition();
+                }
 
 
                 Slide.setPower(button);
                 Slide.setPower(extendPower);
 
+                double dif = bottom - top;
 
 
                 String telem = Double.toString(extendPower);
                 telemetry.addData("Motor power: ", telem);
+                String difSt = Double.toString(dif);
+                telemetry.addLine(difSt);
                 telemetry.update();
 
             }
