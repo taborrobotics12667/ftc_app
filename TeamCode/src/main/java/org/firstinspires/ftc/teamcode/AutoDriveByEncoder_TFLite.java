@@ -68,12 +68,16 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
         vision.init();
         vision.enable();
 
+        goldPosition = vision.getTfLite().getLastKnownSampleOrder();
+        telemetry.addLine(goldPosition.toString());
+        telemetry.update();
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         vision.disable();
 
-        goldPosition = vision.getTfLite().getLastKnownSampleOrder();
+
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
@@ -83,22 +87,40 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
         switch (goldPosition){ // using for things in the autonomous program
             case LEFT:
                 telemetry.addLine("going to the left");
+                telemetry.update();
                 encoderDrive(TURN_SPEED, -8, 8, 5.0);
+                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
+                encoderDrive(TURN_SPEED, 8, -8, 5.0);
+                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
+                //servo
+                encoderDrive(DRIVE_SPEED, -79, -79, 10.0);
                 break;
             case CENTER:
                 telemetry.addLine("going straight");
-                encoderDrive(TURN_SPEED, 10, 10, 5.0);
+                telemetry.update();
+                encoderDrive(DRIVE_SPEED, 40, 40, 5.0);
+                //servo
+                encoderDrive(TURN_SPEED, 6, -6, 5.0);
+                encoderDrive(TURN_SPEED, -79, -79, 10.0);
                 break;
             case RIGHT:
                 telemetry.addLine("going to the right");
+                telemetry.update();
                 encoderDrive(TURN_SPEED, 8, -8, 5.0);
+                encoderDrive(DRIVE_SPEED, 40, 40, 5.0);
+                encoderDrive(TURN_SPEED, -10, 10, 5.0);
+                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
+                //servo
+                encoderDrive(TURN_SPEED, -10, 10, 5.0);
+                encoderDrive(DRIVE_SPEED, 79, 79, 10.0);
                 break;
             case UNKNOWN:
                 telemetry.addLine("staying put");
+                telemetry.update();
                 break;
         }
 
-        encoderDrive(DRIVE_SPEED, 20, 20, 5.0);
+
         //drive to claiming
 
         //robot.arm.setPosition(1.0);            // S4: Stop and close the claw.
@@ -107,7 +129,7 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
 
 
         //telemetry.addData("Path", "Complete");
-        telemetry.update();
+        //telemetry.update();
 
         vision.shutdown();
 
