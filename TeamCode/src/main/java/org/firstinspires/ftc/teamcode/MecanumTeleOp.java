@@ -38,10 +38,10 @@ public class MecanumTeleOp extends LinearOpMode {
 
 
             if (gamepad1.right_bumper){
-                robot.slide(0.5);
+                robot.slide(0.7);
             }
             else if (gamepad1.left_bumper){
-                robot.slide(0.5);
+                robot.slide(-0.7);
             }
 
 

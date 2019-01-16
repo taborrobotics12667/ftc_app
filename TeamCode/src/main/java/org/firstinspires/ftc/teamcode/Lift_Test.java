@@ -54,7 +54,7 @@ public class Lift_Test extends LinearOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     HardwareTest robot = new HardwareTest();
-    double armPosition = robot.ARM_HOME;
+   // double armPosition = robot.ARM_HOME;
     final double ARM_SPEED = 0.01;
 
     @Override

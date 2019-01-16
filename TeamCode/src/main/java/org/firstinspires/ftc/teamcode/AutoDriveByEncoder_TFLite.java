@@ -22,8 +22,8 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
     private double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     private double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * Math.PI);
-    private static double DRIVE_SPEED = 0.3;
-    private static double TURN_SPEED = 0.2;
+    private static double DRIVE_SPEED = 0.5;
+    private static double TURN_SPEED = 0.5;
 
     MasterVision vision;
     SampleRandomizedPositions goldPosition;
@@ -64,7 +64,7 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
                 robot.leftBackDrive.getCurrentPosition());
         telemetry.update();
 
-        vision = new MasterVision(parameters, hardwareMap, true, MasterVision.TFLiteAlgorithm.INFER_NONE);
+        vision = new MasterVision(parameters, hardwareMap, true, MasterVision.TFLiteAlgorithm.INFER_LEFT);
         vision.init();
         vision.enable();
 
@@ -83,7 +83,7 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
         switch (goldPosition){ // using for things in the autonomous program
             case LEFT:
                 telemetry.addLine("going to the left");
-                encoderDrive(TURN_SPEED, -10, 10, 5.0);
+                encoderDrive(TURN_SPEED, -8, 8, 5.0);
                 break;
             case CENTER:
                 telemetry.addLine("going straight");
@@ -91,14 +91,14 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
                 break;
             case RIGHT:
                 telemetry.addLine("going to the right");
-                encoderDrive(TURN_SPEED, 10, -10, 5.0);
+                encoderDrive(TURN_SPEED, 8, -8, 5.0);
                 break;
             case UNKNOWN:
                 telemetry.addLine("staying put");
                 break;
         }
 
-        encoderDrive(DRIVE_SPEED, 10, 5, 5.0);
+        encoderDrive(DRIVE_SPEED, 20, 20, 5.0);
         //drive to claiming
 
         //robot.arm.setPosition(1.0);            // S4: Stop and close the claw.
@@ -106,7 +106,7 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
         sleep(1000);     // pause for servos to move
 
 
-        telemetry.addData("Path", "Complete");
+        //telemetry.addData("Path", "Complete");
         telemetry.update();
 
         vision.shutdown();
