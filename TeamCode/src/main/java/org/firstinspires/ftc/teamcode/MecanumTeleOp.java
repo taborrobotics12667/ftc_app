@@ -23,8 +23,7 @@ public class MecanumTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new MecanumDriveTrain(hardwareMap, "Motor 1", "Motor 2", "Motor 3", "Motor 4");
-        //,"Lift"
+        robot = new MecanumDriveTrain(hardwareMap, "Motor 1", "Motor 2", "Motor 3", "Motor 4","Lift");
 
         waitForStart();
 
@@ -34,7 +33,7 @@ public class MecanumTeleOp extends LinearOpMode {
             double diagonalY = Range.clip(gamepad1.right_stick_y, -maxPower, maxPower);
             double diagonalX = Range.clip(gamepad1.right_stick_x, -maxPower, maxPower);
 
-            double liftPower = Range.clip(gamepad2.left_trigger - gamepad2.right_trigger, -0.5, 0.25);
+            double liftPower = Range.clip(gamepad1.left_trigger - gamepad1.right_trigger, -0.75, 0.75);
 
 
             if (gamepad1.right_bumper){
@@ -88,7 +87,7 @@ public class MecanumTeleOp extends LinearOpMode {
 
 
 
-            //robot.Lift(liftPower);
+            robot.Lift(liftPower);
 
 
             String diags = "X: " + Double.toString(diagonalX) + " Y: " + Double.toString(diagonalY);
