@@ -41,7 +41,7 @@ public class HardwareTest
         leftBackDrive  = hwMap.get(DcMotor.class, "Motor 3");
         rightFrontDrive = hwMap.get(DcMotor.class, "Motor 2");
         rightBackDrive = hwMap.get(DcMotor.class, "Motor 4");
-        linearSlide    = hwMap.get(DcMotor.class, "Extend");
+        //linearSlide    = hwMap.get(DcMotor.class, "Extend");
 
         //grabServo = hwMap.get(CRServo.class, "Grab");
         //armMotor = hwMap.get(DcMotor.class, "Arm");
@@ -56,7 +56,7 @@ public class HardwareTest
         leftBackDrive.setPower(0);
         rightFrontDrive.setPower(0);
         rightBackDrive.setPower(0);
-        linearSlide.setPower(0);
+        //linearSlide.setPower(0);
         //leftArm.setPower(0);
 
         // Set all motors to run without encoders.
@@ -65,7 +65,7 @@ public class HardwareTest
         leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        linearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //linearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
