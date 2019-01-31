@@ -6,23 +6,22 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.ArrayList;
 
-
-public class MecanumDriveTrain {
+public class DriveTrain {
 
     ArrayList<DcMotor> motors = new ArrayList<DcMotor>();
-    int[] right = {1, 3};
-    int[] left = {0, 2};
-    int[] front = {0, 1};
-    int[] back = {2, 3};
-    int[] diagTL = {0, 3};
-    int[] diagTR = {1, 2};
-    int[] lift = {4};
-
-    public MecanumDriveTrain(HardwareMap hardwareMap, String... motorNames) {
-        for (int i = 0; i < motorNames.length; i++) {
-            DcMotor currentMotor = hardwareMap.get(DcMotor.class, motorNames[i]);
-            currentMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            motors.add(currentMotor);
+    int[] right = {1};
+    int[] left = {0};
+    int[] frontBack = {0, 1};
+    int[] lift = {2};
+    int[] extend = {3};
+    int[]
+    HardwareTest ht = new HardwareTest();
+    public DriveTrain(HardwareTest, String... motorNames) {
+        motors.add(ht.leftDrive);
+        motors.add(ht.rightDrive);
+        motors.add(ht.lift);
+        motors.add(ht.armExtend);
+        motors.add(ht.armFlip);
 
         }
 
