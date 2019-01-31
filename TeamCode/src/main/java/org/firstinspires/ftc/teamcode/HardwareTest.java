@@ -3,9 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import java.util.List;
 
 
 public class HardwareTest
@@ -18,7 +17,7 @@ public class HardwareTest
     public DcMotor  armFlip     = null;
 
     public CRServo  grabServo   = null;
-    public CRServo  boxFlip     = null;
+    public Servo boxFlip     = null;
 
 
     public static final double MID_SERVO       =  0.5 ;
@@ -47,7 +46,7 @@ public class HardwareTest
         armFlip = hwMap.get(DcMotor.class, "armFlip");
 
         grabServo = hwMap.get(CRServo.class, "grabServo");
-        boxFlip = hwMap.get(CRServo.class, "boxFlip");
+        boxFlip = hwMap.get(Servo.class, "boxFlip");
 
         //grabServo = hwMap.get(CRServo.class, "Grab");
         //armMotor = hwMap.get(DcMotor.class, "Arm");
