@@ -67,10 +67,15 @@ public class LinearSlide extends LinearOpMode {
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
         leftDrive  = hardwareMap.get(DcMotor.class, "Linear");
+        leftDrive.setPower(0);
+        leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        telemetry.addData("Starting", "Starting at %7d :%7d",
+                leftDrive.getCurrentPosition());
+        telemetry.update();
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -79,20 +84,12 @@ public class LinearSlide extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-
-            // Setup a variable for each drive wheel to save power level for telemetry
             double leftPower;
-            double rightPower;
 
-            // Choose to drive using either Tank Mode, or POV Mode
-            // Comment out the method that's not used.  The default below is POV.
+            //newLeftTarget = leftDrive.getCurrentPosition() + (int) (leftInches );
+            //newRightTarget = rightDrive.getCurrentPosition() + (int) (rightInches);
+            //leftDrive.setTargetPosition(newLeftTarget);
 
-            // POV Mode uses left stick to go forward, and right stick to turn.
-            // - This uses basic math to combine motions and is easier to drive straight.
-            double drive = -gamepad1.left_stick_y;
-
-            // Tank Mode uses one stick to control each wheel.
-            // - This requires no math, but it is hard to drive forward slowly and keep straight.
             leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
 
@@ -101,7 +98,8 @@ public class LinearSlide extends LinearOpMode {
 
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Current Position", "Pos: " + leftDrive.getCurrentPosition());
+            telemetry.addData("Motors", "left (%.2f)", leftPower);
             telemetry.update();
         }
     }

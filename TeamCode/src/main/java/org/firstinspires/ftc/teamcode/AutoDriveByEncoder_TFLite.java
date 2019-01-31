@@ -19,7 +19,7 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
 
     private double COUNTS_PER_MOTOR_REV = 1120;    // eg: Neverest 40
     private double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
-    private double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
+    private double WHEEL_DIAMETER_INCHES = 3.54;     // For figuring circumference
     private double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * Math.PI);
     private static double DRIVE_SPEED = 0.5;
