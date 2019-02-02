@@ -31,7 +31,7 @@ public class GrabbyGrab extends LinearOpMode {
         double ServoPower = 0;
         while (opModeIsActive()) {
 
-            ht.grabServo.setPower(ServoPower);
+            //ht.grabServo.setPower(ServoPower);
             double extendPower = Range.clip(gamepad2.left_stick_y, -0.75, 0.75);
             double armPower = Range.clip(gamepad2.right_stick_x, -0.75, 0.75);
             boolean GoServo = gamepad2.a;

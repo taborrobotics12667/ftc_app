@@ -57,14 +57,16 @@ public class HardwareTest
         // Set all motors to zero power
         leftDrive.setPower(0);
         rightDrive.setPower(0);
-        lift.setPower(0);
+        //lift.setPower(0);
         //leftArm.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armExtend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
