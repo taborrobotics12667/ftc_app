@@ -70,6 +70,7 @@ public class Arm_check_better extends LinearOpMode {
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
         boxServo = hardwareMap.get(DcMotor.class, "box");
+        boxServo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         boxServo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         double run = boxServo.getCurrentPosition();
         //rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
@@ -123,30 +124,8 @@ public class Arm_check_better extends LinearOpMode {
             //}
 
             double armPos1 = Range.clip(gamepad1.left_stick_y, -0.75, 0.75);
-            double armpow = Range.clip(gamepad1.left_stick_y, 0.05, 0.1);
-            double place = boxServo.getCurrentPosition();
-            if (armPos1 < 0) {
-                if (place > run - 300) {
-                    if (place > run - 35) {
-                        boxServo.setPower(0.6);
-                    } else {
-                        boxServo.setPower(0.3);
-                    }
-                } else {
-                    boxServo.setPower(armpow);
-                }
-
-                //rightDrive.setPower(rightPower);
-
-                // Show the elapsed game time and wheel power.
-                telemetry.addData("arm", "%.2f", armPos);
-                telemetry.addData("Status", "Run Time: " + runtime.toString());
-                String place1 = Double.toString(place);
-                telemetry.addData("encoder: ", place1);
-
-                //boxServo.setPower(armPos1);
-                telemetry.update();
+            boxServo.setPower(armPos1);
             }
         }
     }
-}
+
