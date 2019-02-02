@@ -9,9 +9,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.vision.MasterVision;
 import org.firstinspires.ftc.teamcode.vision.SampleRandomizedPositions;
 
-@Autonomous(name="Auto Drive By Encoder TFLite", group="Pushbot")
+@Autonomous(name="Auto Drive By Encoder TFLite Pos 2", group="Pushbot")
 //@Disabled
-public class AutoDriveByEncoder_TFLite extends LinearOpMode {
+public class AutoDriveByEncoder_TFLite_pos2 extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareTest robot = new HardwareTest();   // Use a Pushbot's hardware
@@ -83,30 +83,36 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
                 telemetry.addLine("going to the left");
                 telemetry.update();
                 encoderDrive(TURN_SPEED, -8, 8, 5.0);
-                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
+                encoderDrive(DRIVE_SPEED, 45, 45, 5.0);
+                encoderDrive(TURN_SPEED, 12, -12, 5.0);
+                encoderDrive(DRIVE_SPEED, 60, 60, 5.0);
                 encoderDrive(TURN_SPEED, 8, -8, 5.0);
-                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
                 //servo
                 encoderDrive(DRIVE_SPEED, -79, -79, 10.0);
+                encoderDrive(DRIVE_SPEED, 79, 79, 10.0);
                 break;
             case CENTER:
                 telemetry.addLine("going straight");
                 telemetry.update();
                 encoderDrive(DRIVE_SPEED, 40, 40, 5.0);
+                encoderDrive(TURN_SPEED, 10, -10, 5.0);
+                encoderDrive(DRIVE_SPEED, 60, 60, 5.0);
+                encoderDrive(TURN_SPEED, 8, -8, 5.0);
+                encoderDrive(DRIVE_SPEED, 79, 79, 10.0);
                 //servo
-                encoderDrive(TURN_SPEED, 6, -6, 5.0);
                 encoderDrive(TURN_SPEED, -79, -79, 10.0);
                 break;
             case RIGHT:
                 telemetry.addLine("going to the right");
                 telemetry.update();
                 encoderDrive(TURN_SPEED, 8, -8, 5.0);
-                encoderDrive(DRIVE_SPEED, 40, 40, 5.0);
-                encoderDrive(TURN_SPEED, -10, 10, 5.0);
+                encoderDrive(DRIVE_SPEED, 45, 45, 5.0);
+                encoderDrive(TURN_SPEED, 8, -8, 5.0);
                 encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
-                //servo
-                encoderDrive(TURN_SPEED, -10, 10, 5.0);
+                encoderDrive(TURN_SPEED, 10, -10, 5.0);
                 encoderDrive(DRIVE_SPEED, 79, 79, 10.0);
+                //servo
+                encoderDrive(DRIVE_SPEED, -79, -79, 10.0);
                 break;
             case UNKNOWN:
                 telemetry.addLine("staying put");

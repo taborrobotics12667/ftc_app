@@ -1,5 +1,4 @@
-package org.firstinspires.ftc.teamcode;
-
+/*
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,14 +8,18 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.teamcode.HardwareTest;
 
 import java.util.List;
+
+i*mport com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        /package org.firstinspires.ftc.teamcode;
 
 @Autonomous(name="Auto Drive By Encoder", group="Pushbot")
 //@Disabled
 public class AutoDriveByEncoder extends LinearOpMode {
 
-    /* Declare OpMode members. */
+    /* Declare OpMode members. *\/
     HardwareTest robot = new HardwareTest();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -42,7 +45,7 @@ public class AutoDriveByEncoder extends LinearOpMode {
         /*
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
-         */
+         *\/
         robot.init(hardwareMap);
         initVuforia();
         initTfod();
@@ -96,7 +99,7 @@ public class AutoDriveByEncoder extends LinearOpMode {
         /*robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
         robot.rightClaw.setPosition(0.0);
         sleep(1000);     // pause for servos to move
-        */
+        *\/
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -115,7 +118,7 @@ public class AutoDriveByEncoder extends LinearOpMode {
      *  1) Move gets to the desired position
      *  2) Move runs out of time
      *  3) Driver stops the opmode running.
-     */
+     *\/
 
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
@@ -254,3 +257,5 @@ public class AutoDriveByEncoder extends LinearOpMode {
     }
 
 }
+
+*/

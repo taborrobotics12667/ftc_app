@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 
 /**
@@ -66,12 +67,12 @@ public class LinearSlide extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "Linear");
+        leftDrive  = hardwareMap.get(DcMotor.class, "Motor");
         leftDrive.setPower(0);
         leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        telemetry.addData("Starting", "Starting at %7d :%7d",
+        telemetry.addData("Starting", "Starting at %7d :",
                 leftDrive.getCurrentPosition());
         telemetry.update();
         // Most robots need the motor on one side to be reversed to drive forward
@@ -94,6 +95,7 @@ public class LinearSlide extends LinearOpMode {
             // rightPower = -gamepad1.right_stick_y ;
 
             // Send calculated power to wheels
+            leftPower = Range.clip(leftPower, -0.5, 0.8);
             leftDrive.setPower(leftPower);
 
 
