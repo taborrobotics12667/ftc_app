@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -13,11 +12,11 @@ public class HardwareTest
     public DcMotor  leftDrive   = null;
     public DcMotor  rightDrive  = null;
     public DcMotor  lift        = null;
-    public DcMotor  armExtend   = null;
-    public DcMotor  armFlip     = null;
+    //public DcMotor  armExtend   = null;
+    //public DcMotor  armFlip     = null;
 
-    public CRServo  grabServo   = null;
-    public Servo boxFlip     = null;
+    //public CRServo  grabServo   = null;
+    public Servo marker     = null;
 
 
     public static final double MID_SERVO       =  0.5 ;
@@ -39,14 +38,14 @@ public class HardwareTest
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftDrive  = hwMap.get(DcMotor.class, "Motor 1");
-        rightDrive = hwMap.get(DcMotor.class, "Motor 2");
+        leftDrive  = hwMap.get(DcMotor.class, "Left");
+        rightDrive = hwMap.get(DcMotor.class, "Right");
         lift    = hwMap.get(DcMotor.class, "Lift");
-        armExtend = hwMap.get(DcMotor.class, "armExtend");
-        armFlip = hwMap.get(DcMotor.class, "armFlip");
+        //armExtend = hwMap.get(DcMotor.class, "armExtend");
+        //armFlip = hwMap.get(DcMotor.class, "armFlip");
 
-        grabServo = hwMap.get(CRServo.class, "grabServo");
-        boxFlip = hwMap.get(Servo.class, "boxFlip");
+        //grabServo = hwMap.get(CRServo.class, "grabServo");
+        marker = hwMap.get(Servo.class, "Marker");
 
         //grabServo = hwMap.get(CRServo.class, "Grab");
         //armMotor = hwMap.get(DcMotor.class, "Arm");
@@ -64,8 +63,8 @@ public class HardwareTest
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        armExtend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //armExtend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 

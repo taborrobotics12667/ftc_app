@@ -17,7 +17,7 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
     HardwareTest robot = new HardwareTest();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
-    private double COUNTS_PER_MOTOR_REV = 1120;    // eg: Neverest 40
+    private double COUNTS_PER_MOTOR_REV = 2240;    // eg: Neverest 40
     private double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
     private double WHEEL_DIAMETER_INCHES = 3.54;     // For figuring circumference
     private double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -48,13 +48,12 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
 
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.armFlip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.armExtend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //robot.armExtend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.armExtend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //robot.armExtend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0", "Starting at %7d :%7d",
@@ -78,10 +77,11 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.lift.setTargetPosition(3000);
+        robot.lift.setTargetPosition(400);
         robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.lift.setPower(Math.abs(0.6));
         while (robot.lift.isBusy()) {
+            telemetry.addData("Lift",Integer.toString(robot.lift.getCurrentPosition()));
             telemetry.update();
         }
         robot.lift.setPower(Math.abs(0));

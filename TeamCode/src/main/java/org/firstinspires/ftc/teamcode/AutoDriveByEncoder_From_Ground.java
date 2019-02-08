@@ -17,7 +17,7 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
     HardwareTest robot = new HardwareTest();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
-    private double COUNTS_PER_MOTOR_REV = 1120;    // eg: Neverest 40
+    private double COUNTS_PER_MOTOR_REV = 2240;    // eg: Neverest 40
     private double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
     private double WHEEL_DIAMETER_INCHES = 3.54;     // For figuring circumference
     private double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -48,13 +48,11 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
 
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.armFlip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.armExtend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.armExtend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.armExtend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //robot.armExtend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0", "Starting at %7d :%7d",
@@ -62,9 +60,11 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
                 robot.rightDrive.getCurrentPosition());
         telemetry.update();
 
-        vision = new MasterVision(parameters, hardwareMap, false, MasterVision.TFLiteAlgorithm.INFER_LEFT);
+        vision = new MasterVision(parameters, hardwareMap, true, MasterVision.TFLiteAlgorithm.INFER_NONE);
         vision.init();
         vision.enable();
+
+        sleep(5000);
 
         goldPosition = vision.getTfLite().getLastKnownSampleOrder();
         telemetry.addLine(goldPosition.toString());
@@ -106,34 +106,34 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
             case LEFT:
                 telemetry.addLine("going to the left");
                 telemetry.update();
-                encoderDrive(TURN_SPEED, -8, 8, 5.0);
-                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
-                encoderDrive(TURN_SPEED, 8, -8, 5.0);
-                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
+                encoderDrive(TURN_SPEED, -5, 5, 5.0);
+                encoderDrive(DRIVE_SPEED, 20, 20, 5.0);
+                encoderDrive(TURN_SPEED, 5, -5, 5.0);
+                encoderDrive(DRIVE_SPEED, 15, 15, 5.0);
 
                 servo();
 
                 //servo
-                encoderDrive(DRIVE_SPEED, -70, -70, 10.0);
+                encoderDrive(DRIVE_SPEED, -50, -50, 10.0);
                 break;
             case CENTER:
                 telemetry.addLine("going straight");
                 telemetry.update();
-                encoderDrive(DRIVE_SPEED, 40, 40, 5.0);
+                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
                 servo();
                 encoderDrive(TURN_SPEED, 6, -6, 5.0);
-                encoderDrive(TURN_SPEED, -70, -70, 10.0);
+                encoderDrive(TURN_SPEED, -50, -50, 10.0);
                 break;
             case RIGHT:
                 telemetry.addLine("going to the right");
                 telemetry.update();
-                encoderDrive(TURN_SPEED, 8, -8, 5.0);
-                encoderDrive(DRIVE_SPEED, 40, 40, 5.0);
+                encoderDrive(TURN_SPEED, 5, -5, 5.0);
+                encoderDrive(DRIVE_SPEED, 20, 20, 5.0);
                 encoderDrive(TURN_SPEED, -10, 10, 5.0);
                 encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
                 servo();
                 encoderDrive(TURN_SPEED, -10, 10, 5.0);
-                encoderDrive(DRIVE_SPEED, 70, 70, 10.0);
+                encoderDrive(DRIVE_SPEED, 50, 50, 10.0);
                 break;
             case UNKNOWN:
                 telemetry.addLine("staying put");
@@ -230,19 +230,10 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
     }
 
     public void servo () {
-        /*robot.armFlip.setTargetPosition(300);
-        robot.armFlip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.armFlip.setPower(Math.abs(0.3));
-        while (robot.armFlip.isBusy()) {
-            telemetry.update();
-        }
-        robot.armFlip.setPower(Math.abs(0));
-        robot.armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.boxFlip.setPosition(0.5);
-        robot.grabServo.setDirection(CRServo.Direction.REVERSE);
-        robot.grabServo.setPower(0.75);
-        */
-        sleep(3000);
+        robot.marker.setPosition(0);
+        robot.marker.setPosition(0.5);
+        robot.marker.setPosition(1);
+        sleep(1000);
     }
 
 }

@@ -26,12 +26,12 @@ public class MecanumTeleOp extends LinearOpMode {
         ht.init(hardwareMap);
 
         waitForStart();
-        ht.armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        ht.armFlip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //ht.armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //ht.armFlip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ht.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ht.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ht.lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        double run = ht.armFlip.getCurrentPosition();
+        //double run = ht.armFlip.getCurrentPosition();
         while (opModeIsActive()) {
             double Rpower = Range.clip(gamepad1.left_stick_y + gamepad1.left_stick_x, -maxPower, maxPower);
             double Lpower = Range.clip(gamepad1.left_stick_y - gamepad1.left_stick_x, -maxPower, maxPower);
@@ -49,39 +49,32 @@ public class MecanumTeleOp extends LinearOpMode {
             }
 
 
-            ht.armFlip.setPower(flipPower);
+            //ht.armFlip.setPower(flipPower);
 
 
-            if (gamepad1.right_bumper) {
-                ht.armExtend.setPower(0.3);
-            }
-            else if (gamepad1.left_bumper) {
-                ht.armExtend.setPower(-0.3);
-            }
-            else{
-                ht.armExtend.setPower(0);
-            }
+            //if (gamepad1.right_bumper) {
+             //   ht.armExtend.setPower(0.3);
+            //}
+            //else if (gamepad1.left_bumper) {
+            //    ht.armExtend.setPower(-0.3);
+            //}
+            //else{
+            //    ht.armExtend.setPower(0);
+            //}
 
 
-            if (gamepad1.a) {
-                if (grab) {
-                    ht.grabServo.setPower(.75);
-                } else {
-                    ht.grabServo.setPower(0);
+            //if (gamepad1.a) {
+            //    if (grab) {
+            //        ht.grabServo.setPower(.75);
+            //    } else {
+             //       ht.grabServo.setPower(0);
 
-                }
-                grab = !grab;
-            }
-
-            if (gamepad1.b) {
-                armPos = 0.75;
-            }
+               // }
+                //grab = !grab;
+            //}
 
 
 
-            ht.boxFlip.setPosition(armPos);
-
-            telemetry.addData("arm", "%.2f", armPos);
 
             telemetry.update();
 
