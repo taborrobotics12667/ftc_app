@@ -2,11 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
@@ -20,12 +16,14 @@ public class MecanumTeleOp extends LinearOpMode {
 
     private double maxPower = maxPower1 + 0.2 * conditional;
 
-    HardwareTest ht = new HardwareTest();
+    TeleopHard ht = new TeleopHard();
 
 
 
     @Override
     public void runOpMode() {
+
+        ht.init(hardwareMap);
 
         waitForStart();
         ht.armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -40,25 +38,25 @@ public class MecanumTeleOp extends LinearOpMode {
             double liftPower = Range.clip(gamepad1.left_trigger - gamepad1.right_trigger, -0.75, 0.75);
             double flipPower = Range.clip(gamepad1.right_stick_y, -0.75, 0.75);
 
+            if (gamepad1.y) {
+                flipPower = 0.3;
 
-            double place = ht.armFlip.getCurrentPosition();
-            if (flipPower < 0) {
-                if (place > run - 300) {
-                    if (place > run - 45) {
-                        ht.armFlip.setPower(0.8);
-                    } else {
-                        ht.armFlip.setPower(0.3);
-                    }
-                }
-            } else if (flipPower > 0){
-                ht.armFlip.setPower(0.05);
+            } else if (gamepad1.x) {
+                flipPower = -0.3;
+
+            } else {
+                flipPower = 0;
             }
+
+
+            ht.armFlip.setPower(flipPower);
+
 
             if (gamepad1.right_bumper) {
-                ht.armExtend.setPower(0.5);
+                ht.armExtend.setPower(0.3);
             }
             else if (gamepad1.left_bumper) {
-                ht.armExtend.setPower(-0.5);
+                ht.armExtend.setPower(-0.3);
             }
             else{
                 ht.armExtend.setPower(0);
@@ -74,13 +72,13 @@ public class MecanumTeleOp extends LinearOpMode {
                 }
                 grab = !grab;
             }
+
             if (gamepad1.b) {
-                armPos = 0.0;
-            } else if (gamepad1.y) {
-                armPos = 0.25;
-            } else if (gamepad1.x) {
                 armPos = 0.75;
             }
+
+
+
             ht.boxFlip.setPosition(armPos);
 
             telemetry.addData("arm", "%.2f", armPos);

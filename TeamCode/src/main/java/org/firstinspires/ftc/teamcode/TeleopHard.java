@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-public class HardwareTest
+public class TeleopHard
 {
     /* Public OpMode members. */
     public DcMotor  leftDrive   = null;
@@ -29,7 +29,7 @@ public class HardwareTest
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public HardwareTest(){
+    public TeleopHard(){
 
     }
 
@@ -51,8 +51,8 @@ public class HardwareTest
         //grabServo = hwMap.get(CRServo.class, "Grab");
         //armMotor = hwMap.get(DcMotor.class, "Arm");
 
-        leftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+        leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
         // Set all motors to zero power
         leftDrive.setPower(0);

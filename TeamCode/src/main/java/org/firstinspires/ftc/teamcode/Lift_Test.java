@@ -105,6 +105,7 @@ public class Lift_Test extends LinearOpMode {
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
+
             telemetry.update();
         }
     }

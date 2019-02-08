@@ -32,7 +32,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -71,8 +70,12 @@ public class Arm_check_better extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
         boxServo = hardwareMap.get(DcMotor.class, "box");
         boxServo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        boxServo.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         boxServo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         double run = boxServo.getCurrentPosition();
+        telemetry.addData("Starting", "Starting at %7d :",
+                boxServo.getCurrentPosition());
+        telemetry.update();
         //rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
 
         // Most robots need the motor on one side to be reversed to drive forward
@@ -123,8 +126,11 @@ public class Arm_check_better extends LinearOpMode {
             //armPos = -0.75;
             //}
 
+
             double armPos1 = Range.clip(gamepad1.left_stick_y, -0.75, 0.75);
             boxServo.setPower(armPos1);
+            telemetry.addData("Motors", Integer.toString(boxServo.getCurrentPosition()));
+            telemetry.update();
             }
         }
     }

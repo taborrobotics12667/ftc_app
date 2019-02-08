@@ -9,9 +9,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.vision.MasterVision;
 import org.firstinspires.ftc.teamcode.vision.SampleRandomizedPositions;
 
-@Autonomous(name="Auto Drive By Encoder TFLite Pos 2", group="Pushbot")
+@Autonomous(name="Auto Drive By Encoder From Ground", group="Pushbot")
 //@Disabled
-public class AutoDriveByEncoder_TFLite_pos2 extends LinearOpMode {
+public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareTest robot = new HardwareTest();   // Use a Pushbot's hardware
@@ -22,7 +22,7 @@ public class AutoDriveByEncoder_TFLite_pos2 extends LinearOpMode {
     private double WHEEL_DIAMETER_INCHES = 3.54;     // For figuring circumference
     private double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * Math.PI);
-    private static double DRIVE_SPEED = 0.5;
+    private static double DRIVE_SPEED = 0.6;
     private static double TURN_SPEED = 0.5;
 
     MasterVision vision;
@@ -48,9 +48,13 @@ public class AutoDriveByEncoder_TFLite_pos2 extends LinearOpMode {
 
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.armFlip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.armExtend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.armExtend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0", "Starting at %7d :%7d",
@@ -72,10 +76,30 @@ public class AutoDriveByEncoder_TFLite_pos2 extends LinearOpMode {
         vision.disable();
 
 
-
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(TURN_SPEED, 10, -10, 5.0);  // Drive from lander center position
+        /*robot.lift.setTargetPosition(-3000);
+        robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.lift.setPower(Math.abs(0.6));
+        while (robot.lift.isBusy()) {
+            telemetry.update();
+        }
+        robot.lift.setPower(Math.abs(0));
+        robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+        robot.lift.setTargetPosition(-500);
+        robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.lift.setPower(Math.abs(0.6));
+        while (robot.lift.isBusy()) {
+            telemetry.update();
+        }
+        robot.lift.setPower(Math.abs(0));
+        robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        */
+
+
+        encoderDrive(TURN_SPEED, 8, -8, 5.0);  // Drive from lander center position
         //encoderDrive(TURN_SPEED, 5, 5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
 
         switch (goldPosition){ // using for things in the autonomous program
@@ -83,41 +107,43 @@ public class AutoDriveByEncoder_TFLite_pos2 extends LinearOpMode {
                 telemetry.addLine("going to the left");
                 telemetry.update();
                 encoderDrive(TURN_SPEED, -8, 8, 5.0);
-                encoderDrive(DRIVE_SPEED, 45, 45, 5.0);
-                encoderDrive(TURN_SPEED, 12, -12, 5.0);
-                encoderDrive(DRIVE_SPEED, 60, 60, 5.0);
+                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
                 encoderDrive(TURN_SPEED, 8, -8, 5.0);
+                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
+
+                servo();
+
                 //servo
-                encoderDrive(DRIVE_SPEED, -79, -79, 10.0);
-                encoderDrive(DRIVE_SPEED, 79, 79, 10.0);
+                encoderDrive(DRIVE_SPEED, -70, -70, 10.0);
                 break;
             case CENTER:
                 telemetry.addLine("going straight");
                 telemetry.update();
                 encoderDrive(DRIVE_SPEED, 40, 40, 5.0);
-                encoderDrive(TURN_SPEED, 10, -10, 5.0);
-                encoderDrive(DRIVE_SPEED, 60, 60, 5.0);
-                encoderDrive(TURN_SPEED, 8, -8, 5.0);
-                encoderDrive(DRIVE_SPEED, 79, 79, 10.0);
-                //servo
-                encoderDrive(TURN_SPEED, -79, -79, 10.0);
+                servo();
+                encoderDrive(TURN_SPEED, 6, -6, 5.0);
+                encoderDrive(TURN_SPEED, -70, -70, 10.0);
                 break;
             case RIGHT:
                 telemetry.addLine("going to the right");
                 telemetry.update();
                 encoderDrive(TURN_SPEED, 8, -8, 5.0);
-                encoderDrive(DRIVE_SPEED, 45, 45, 5.0);
-                encoderDrive(TURN_SPEED, 8, -8, 5.0);
+                encoderDrive(DRIVE_SPEED, 40, 40, 5.0);
+                encoderDrive(TURN_SPEED, -10, 10, 5.0);
                 encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
-                encoderDrive(TURN_SPEED, 10, -10, 5.0);
-                encoderDrive(DRIVE_SPEED, 79, 79, 10.0);
-                //servo
-                encoderDrive(DRIVE_SPEED, -79, -79, 10.0);
+                servo();
+                encoderDrive(TURN_SPEED, -10, 10, 5.0);
+                encoderDrive(DRIVE_SPEED, 70, 70, 10.0);
                 break;
             case UNKNOWN:
                 telemetry.addLine("staying put");
+                telemetry.addLine("going straight");
                 telemetry.update();
-                encoderDrive(TURN_SPEED, 60, 60, 5.0);
+
+                encoderDrive(DRIVE_SPEED, 50, 50, 12.0);
+
+                //servo();
+
                 break;
         }
 
@@ -153,6 +179,7 @@ public class AutoDriveByEncoder_TFLite_pos2 extends LinearOpMode {
         int newLeftTarget;
         int newRightTarget;
 
+
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
@@ -186,7 +213,7 @@ public class AutoDriveByEncoder_TFLite_pos2 extends LinearOpMode {
                 telemetry.addData("Path2", "Running at %7d :%7d",
                         robot.leftDrive.getCurrentPosition(),
                         robot.rightDrive.getCurrentPosition()
-                        );
+                );
                 telemetry.update();
             }
 
@@ -202,6 +229,20 @@ public class AutoDriveByEncoder_TFLite_pos2 extends LinearOpMode {
         }
     }
 
-
+    public void servo () {
+        /*robot.armFlip.setTargetPosition(300);
+        robot.armFlip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.armFlip.setPower(Math.abs(0.3));
+        while (robot.armFlip.isBusy()) {
+            telemetry.update();
+        }
+        robot.armFlip.setPower(Math.abs(0));
+        robot.armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.boxFlip.setPosition(0.5);
+        robot.grabServo.setDirection(CRServo.Direction.REVERSE);
+        robot.grabServo.setPower(0.75);
+        */
+        sleep(3000);
+    }
 
 }
