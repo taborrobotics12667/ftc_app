@@ -28,8 +28,7 @@ public class MecanumTeleOp extends LinearOpMode {
         waitForStart();
         //ht.armFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //ht.armFlip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ht.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ht.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         ht.lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //double run = ht.armFlip.getCurrentPosition();
         while (opModeIsActive()) {

@@ -48,10 +48,12 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
 
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //robot.armExtend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //robot.armExtend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -61,9 +63,11 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
                 robot.rightDrive.getCurrentPosition());
         telemetry.update();
 
-        vision = new MasterVision(parameters, hardwareMap, false, MasterVision.TFLiteAlgorithm.INFER_LEFT);
+        vision = new MasterVision(parameters, hardwareMap, true, MasterVision.TFLiteAlgorithm.INFER_RIGHT);
         vision.init();
         vision.enable();
+
+        sleep(5000);
 
         goldPosition = vision.getTfLite().getLastKnownSampleOrder();
         telemetry.addLine(goldPosition.toString());
@@ -77,7 +81,7 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        robot.lift.setTargetPosition(400);
+        robot.lift.setTargetPosition(-200);
         robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.lift.setPower(Math.abs(0.6));
         while (robot.lift.isBusy()) {
@@ -86,6 +90,8 @@ public class AutoDriveByEncoder_TFLite extends LinearOpMode {
         }
         robot.lift.setPower(Math.abs(0));
         robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
 
         /*
         robot.lift.setTargetPosition(-500);

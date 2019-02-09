@@ -71,7 +71,7 @@ public class HardwareTest
         // Define and initialize ALL installed servos.
         //leftClaw  = hwMap.get(Servo.class, "left_hand");
         //rightClaw = hwMap.get(Servo.class, "right_hand");
-        //leftClaw.setPosition(MID_SERVO);
+        marker.setPosition(1);
         //rightClaw.setPosition(MID_SERVO);
     }
 }

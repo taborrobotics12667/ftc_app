@@ -48,27 +48,34 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
 
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //robot.armExtend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //robot.armExtend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+
+
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0", "Starting at %7d :%7d",
+        telemetry.addData("Path0", "Starting at %7d :%7d :%7d",
                 robot.leftDrive.getCurrentPosition(),
-                robot.rightDrive.getCurrentPosition());
+                robot.rightDrive.getCurrentPosition(),
+                robot.lift.getCurrentPosition());
         telemetry.update();
 
-        vision = new MasterVision(parameters, hardwareMap, true, MasterVision.TFLiteAlgorithm.INFER_NONE);
+        vision = new MasterVision(parameters, hardwareMap, true, MasterVision.TFLiteAlgorithm.INFER_LEFT);
         vision.init();
         vision.enable();
 
-        sleep(5000);
 
         goldPosition = vision.getTfLite().getLastKnownSampleOrder();
-        telemetry.addLine(goldPosition.toString());
-        telemetry.update();
+        while (goldPosition.toString() != "UNKNOWN") {
+            goldPosition = vision.getTfLite().getLastKnownSampleOrder();
+            telemetry.addLine(goldPosition.toString());
+        telemetry.update();}
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -76,27 +83,25 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
         vision.disable();
 
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        /*robot.lift.setTargetPosition(-3000);
-        robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.lift.setPower(Math.abs(0.6));
-        while (robot.lift.isBusy()) {
+        robot.lift.setPower(-0.6);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.8)) {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-        robot.lift.setPower(Math.abs(0));
-        robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        sleep(250);
 
-        robot.lift.setTargetPosition(-500);
-        robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.lift.setPower(Math.abs(0.6));
-        while (robot.lift.isBusy()) {
+        encoderDrive(DRIVE_SPEED, 2,2,4.0);
+
+        sleep(250);
+
+        robot.lift.setPower(0.6);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.8)) {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-        robot.lift.setPower(Math.abs(0));
-        robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        */
 
 
         encoderDrive(TURN_SPEED, 8, -8, 5.0);  // Drive from lander center position
@@ -107,9 +112,9 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
                 telemetry.addLine("going to the left");
                 telemetry.update();
                 encoderDrive(TURN_SPEED, -5, 5, 5.0);
-                encoderDrive(DRIVE_SPEED, 20, 20, 5.0);
-                encoderDrive(TURN_SPEED, 5, -5, 5.0);
                 encoderDrive(DRIVE_SPEED, 15, 15, 5.0);
+                encoderDrive(TURN_SPEED, 5, -5, 5.0);
+                encoderDrive(DRIVE_SPEED, 10, 20, 8.0);
 
                 servo();
 
@@ -127,12 +132,12 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
             case RIGHT:
                 telemetry.addLine("going to the right");
                 telemetry.update();
-                encoderDrive(TURN_SPEED, 5, -5, 5.0);
-                encoderDrive(DRIVE_SPEED, 20, 20, 5.0);
-                encoderDrive(TURN_SPEED, -10, 10, 5.0);
-                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
+                encoderDrive(TURN_SPEED, 2, -2, 5.0);
+                encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
+                encoderDrive(TURN_SPEED, -8, 8, 5.0);
+                encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
                 servo();
-                encoderDrive(TURN_SPEED, -10, 10, 5.0);
+                encoderDrive(TURN_SPEED, -8, 8, 5.0);
                 encoderDrive(DRIVE_SPEED, 50, 50, 10.0);
                 break;
             case UNKNOWN:
@@ -140,18 +145,13 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
                 telemetry.addLine("going straight");
                 telemetry.update();
 
-                encoderDrive(DRIVE_SPEED, 50, 50, 12.0);
-
-                //servo();
+                servo();
 
                 break;
         }
 
 
-        //drive to claiming
 
-        //robot.arm.setPosition(1.0);            // S4: Stop and close the claw.
-        //robot.arm.setPosition(0.0);
         sleep(1000);     // pause for servos to move
 
 
@@ -230,9 +230,7 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
     }
 
     public void servo () {
-        robot.marker.setPosition(0);
         robot.marker.setPosition(0.5);
-        robot.marker.setPosition(1);
         sleep(1000);
     }
 
