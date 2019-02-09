@@ -72,7 +72,7 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
 
 
         goldPosition = vision.getTfLite().getLastKnownSampleOrder();
-        while (goldPosition.toString() != "UNKNOWN") {
+        while (goldPosition.toString() == "UNKNOWN") {
             goldPosition = vision.getTfLite().getLastKnownSampleOrder();
             telemetry.addLine(goldPosition.toString());
         telemetry.update();}
@@ -92,7 +92,7 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
 
         sleep(250);
 
-        encoderDrive(DRIVE_SPEED, 2,2,4.0);
+        encoderDrive(DRIVE_SPEED, 1.5,1.5,4.0);
 
         sleep(250);
 
@@ -104,41 +104,41 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
         }
 
 
-        encoderDrive(TURN_SPEED, 8, -8, 5.0);  // Drive from lander center position
+        encoderDrive(TURN_SPEED, 7.2, -7.2  , 5.0);  // Drive from lander center position
         //encoderDrive(TURN_SPEED, 5, 5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
 
         switch (goldPosition){ // using for things in the autonomous program
             case LEFT:
                 telemetry.addLine("going to the left");
                 telemetry.update();
-                encoderDrive(TURN_SPEED, -5, 5, 5.0);
+                encoderDrive(TURN_SPEED, -3.0, 3.0, 5.0);
                 encoderDrive(DRIVE_SPEED, 15, 15, 5.0);
                 encoderDrive(TURN_SPEED, 5, -5, 5.0);
-                encoderDrive(DRIVE_SPEED, 10, 20, 8.0);
+                encoderDrive(DRIVE_SPEED, 10, 10, 8.0);
 
                 servo();
 
                 //servo
-                encoderDrive(DRIVE_SPEED, -50, -50, 10.0);
+                //encoderDrive(DRIVE_SPEED, -50, -50, 10.0);
                 break;
             case CENTER:
                 telemetry.addLine("going straight");
                 telemetry.update();
-                encoderDrive(DRIVE_SPEED, 30, 30, 5.0);
+                encoderDrive(DRIVE_SPEED, 23, 23, 5.0);
                 servo();
-                encoderDrive(TURN_SPEED, 6, -6, 5.0);
-                encoderDrive(TURN_SPEED, -50, -50, 10.0);
+                //encoderDrive(TURN_SPEED, 6, -6, 5.0);
+                //encoderDrive(TURN_SPEED, -50, -50, 10.0);
                 break;
             case RIGHT:
                 telemetry.addLine("going to the right");
                 telemetry.update();
-                encoderDrive(TURN_SPEED, 2, -2, 5.0);
-                encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
-                encoderDrive(TURN_SPEED, -8, 8, 5.0);
-                encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
+                encoderDrive(TURN_SPEED, 4, -4, 5.0);
+                encoderDrive(DRIVE_SPEED, 18, 18, 5.0);
+                encoderDrive(TURN_SPEED, -7, 7, 5.0);
+                encoderDrive(DRIVE_SPEED, 5, 5, 5.0);
                 servo();
-                encoderDrive(TURN_SPEED, -8, 8, 5.0);
-                encoderDrive(DRIVE_SPEED, 50, 50, 10.0);
+                //encoderDrive(TURN_SPEED, -8, 8, 5.0);
+                //encoderDrive(DRIVE_SPEED, 50, 50, 10.0);
                 break;
             case UNKNOWN:
                 telemetry.addLine("staying put");
