@@ -9,9 +9,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.vision.MasterVision;
 import org.firstinspires.ftc.teamcode.vision.SampleRandomizedPositions;
 
-@Autonomous(name="Auto Drive By Encoder From Ground", group="Pushbot")
+@Autonomous(name="Auto Drive By Encoder crater", group="Pushbot")
 //@Disabled
-public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
+public class AutoDriveByEncoder_crater extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareTest robot = new HardwareTest();   // Use a Pushbot's hardware
@@ -66,16 +66,16 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
                 robot.lift.getCurrentPosition());
         telemetry.update();
 
-        vision = new MasterVision(parameters, hardwareMap, true, MasterVision.TFLiteAlgorithm.INFER_LEFT);
+        vision = new MasterVision(parameters, hardwareMap, true, MasterVision.TFLiteAlgorithm.INFER_RIGHT);
         vision.init();
         vision.enable();
 
 
         goldPosition = vision.getTfLite().getLastKnownSampleOrder();
-        while ((goldPosition.toString() == "UNKNOWN")||(runtime.seconds() == 10)){
+        while (goldPosition.toString() == "UNKNOWN") {
             goldPosition = vision.getTfLite().getLastKnownSampleOrder();
             telemetry.addLine(goldPosition.toString());
-        telemetry.update();}
+            telemetry.update();}
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -85,11 +85,10 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
 
         robot.lift.setPower(-0.6);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.8)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.75)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-
 
         sleep(250);
 
@@ -98,13 +97,13 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
         sleep(250);
 
         robot.lift.setPower(0.6);
-
         encoderDrive(TURN_SPEED, 7.2, -7.2  , 5.0);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.75)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.8)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
+
 
           // Drive from lander center position
         //encoderDrive(TURN_SPEED, 5, 5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
@@ -115,10 +114,10 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
                 telemetry.update();
                 encoderDrive(TURN_SPEED, -3.0, 3.0, 5.0);
                 encoderDrive(DRIVE_SPEED, 15, 15, 5.0);
-                encoderDrive(TURN_SPEED, 5, -5, 5.0);
-                encoderDrive(DRIVE_SPEED, 10, 10, 8.0);
+                //encoderDrive(TURN_SPEED, 5, -5, 5.0);
+                //encoderDrive(DRIVE_SPEED, 10, 10, 8.0);
 
-                servo();
+                //servo();
 
                 //servo
                 //encoderDrive(DRIVE_SPEED, -50, -50, 10.0);
@@ -126,9 +125,8 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
             case CENTER:
                 telemetry.addLine("going straight");
                 telemetry.update();
-                encoderDrive(DRIVE_SPEED, 23, 23, 5.0);
-                sleep(5000);
-                servo();
+                encoderDrive(DRIVE_SPEED, 15, 15, 5.0);
+                //servo();
                 //encoderDrive(TURN_SPEED, 6, -6, 5.0);
                 //encoderDrive(TURN_SPEED, -50, -50, 10.0);
                 break;
@@ -138,8 +136,8 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
                 encoderDrive(TURN_SPEED, 4, -4, 5.0);
                 encoderDrive(DRIVE_SPEED, 18, 18, 5.0);
                 encoderDrive(TURN_SPEED, -7, 7, 5.0);
-                encoderDrive(DRIVE_SPEED, 5, 5, 5.0);
-                servo();
+                //encoderDrive(DRIVE_SPEED, 5, 5, 5.0);
+                //servo();
                 //encoderDrive(TURN_SPEED, -8, 8, 5.0);
                 //encoderDrive(DRIVE_SPEED, 50, 50, 10.0);
                 break;
@@ -147,7 +145,6 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
                 telemetry.addLine("staying put");
                 telemetry.addLine("going straight");
                 telemetry.update();
-                encoderDrive(DRIVE_SPEED, 23, 23, 5.0);
 
                 servo();
 
@@ -239,3 +236,4 @@ public class AutoDriveByEncoder_From_Ground extends LinearOpMode {
     }
 
 }
+
